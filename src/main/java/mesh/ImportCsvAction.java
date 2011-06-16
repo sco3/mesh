@@ -3,23 +3,21 @@
  */
 package mesh;
 
+import static mesh.Db.getEm;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.beanutils.BeanUtils;
-
-import static mesh.Db.getEm;
 
 final class ImportCsvAction implements ActionListener {
 	/**
@@ -78,7 +76,7 @@ final class ImportCsvAction implements ActionListener {
 			
 			CriteriaBuilder qb = getEm().getCriteriaBuilder();
 			CriteriaQuery<Tmp> cq = qb.createQuery(Tmp.class);
-			Root<Tmp> p = cq.from(Tmp.class);
+			//Root<Tmp> p = cq.from(Tmp.class);
 			
 			TypedQuery<Tmp> tq = getEm().createQuery(cq); 
 			List<Tmp> tmps = tq.getResultList();
