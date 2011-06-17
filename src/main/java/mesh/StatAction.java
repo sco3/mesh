@@ -50,9 +50,10 @@ final class StatAction implements ActionListener {
 		    for (int i = 0; i < size; i++) {
 		    	for (int j = 0; j < size; j++) {
 		    		Long value = (Long)fields[idx];
+		    		Long z = value;
 		    		value *= 100;
 		    		value /= n;
-		    		mForm.mDataModel.matrix[i][j]= Long.toString(value);
+		    		mForm.mDataModel.matrix[i][j]= value+":"+z;
 		    		idx++;
 		    	}
 		    }
