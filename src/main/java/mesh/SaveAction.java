@@ -101,6 +101,7 @@ final class SaveAction implements ActionListener {
 					JOptionPane.OK_OPTION);
 		}
 		exportCsv();
+		mForm.getWon().setSelected(false);
 	}
 
 
