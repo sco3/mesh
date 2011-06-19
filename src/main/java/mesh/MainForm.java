@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,6 +27,15 @@ public class MainForm extends JFrame {
 	private JButton mSave;
 	private JButton mStat;
 	private JButton mImportCsv;
+	private JCheckBox mWon;
+
+	private JCheckBox getWon() {
+		if (mWon == null) {
+			mWon = new JCheckBox();
+			mWon.setText("won");
+		}
+		return mWon;
+	}
 
 	private JButton getImportCsv() {
 		if (mImportCsv == null) {
@@ -128,7 +138,7 @@ public class MainForm extends JFrame {
 	}
 
 	public MainForm() {
-		Thread db = new Thread (new Runnable() {
+		Thread db = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -136,7 +146,7 @@ public class MainForm extends JFrame {
 			}
 		});
 		db.start();
-		
+
 		setSize(450, 502);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -157,10 +167,13 @@ public class MainForm extends JFrame {
 										GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)).addGroup(
 
-						layout.createParallelGroup().addComponent(getRandom())
-								.addComponent(getClear()).addComponent(
-										getSave()).addComponent(getStat())
-								.addComponent(getImportCsv()))
+				layout.createParallelGroup() //
+						.addComponent(getRandom()) //
+						.addComponent(getClear()) //
+						.addComponent(getSave()) //
+						.addComponent(getWon()) //
+						.addComponent(getStat()) //
+						.addComponent(getImportCsv()))
 
 		);
 
@@ -175,11 +188,13 @@ public class MainForm extends JFrame {
 
 						.addGroup(
 
-								layout.createSequentialGroup().addComponent(
-										getRandom()).addComponent(getClear())
-										.addComponent(getSave()).addComponent(
-												getStat()).addComponent(
-												getImportCsv()))
+						layout.createSequentialGroup() //
+								.addComponent(getRandom()) //
+								.addComponent(getClear()) //
+								.addComponent(getSave()) //
+								.addComponent(getWon()) //
+								.addComponent(getStat()) //
+								.addComponent(getImportCsv())) //
 
 				);
 

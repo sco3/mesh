@@ -14,6 +14,9 @@ import javax.persistence.TemporalType;
 @Entity
 @IdClass (value=MatrixId.class)
 public class Matrix {
+	private Integer won;
+	
+	
 	public int getC0() {
 		return c0;
 	}
@@ -424,6 +427,14 @@ public class Matrix {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public void setWon(Integer won) {
+		this.won = won;
+	}
+
+	public Integer getWon() {
+		return won;
 	}
 
 	private static final long serialVersionUID = 1L;
