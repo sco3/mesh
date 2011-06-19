@@ -7,10 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 final class RandomAction implements ActionListener {
 	private final MainForm mMainForm;
 	List<Integer> mMarks = new ArrayList<Integer>();
+	Random rnd = new Random();
 
 	/**
 	 * @param mainForm
@@ -31,7 +33,8 @@ final class RandomAction implements ActionListener {
 	}
 
 	private void pickMarked(int size) {
-		int idx = (int) Math.round(Math.random()*(mMarks.size()-1));
+		//int idx = (int) Math.round(Math.random()*(mMarks.size()-1));
+		int idx = rnd.nextInt(mMarks.size());
 		idx = mMarks.get(idx);
 		
 		for (int i = 0; i < size; i++) {
@@ -61,7 +64,8 @@ final class RandomAction implements ActionListener {
 	}
 
 	private void pickFromAll(int size) {
-		long idx = (long) Math.round(Math.random()*(size*size - 1));
+		//long idx = (long) Math.round(Math.random()*(size*size - 1));
+		long idx = rnd.nextInt(size*size);
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++ ) {
 				int cur = i*size+j;
