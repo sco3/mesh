@@ -86,6 +86,11 @@ final class SaveAction implements ActionListener {
 			if (old == null) {
 				getEm().getTransaction().begin();
 				m.date = new Date();
+				Integer won = new Integer(0);
+				if (mForm.getWon().isSelected()) {
+					won = new Integer(1);
+				}
+				m.setWon(won);
 				getEm().persist(m);
 				getEm().getTransaction().commit();
 				JOptionPane.showMessageDialog(mForm, "Saved", "Info",

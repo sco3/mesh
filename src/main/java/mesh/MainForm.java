@@ -29,7 +29,7 @@ public class MainForm extends JFrame {
 	private JButton mImportCsv;
 	private JCheckBox mWon;
 
-	private JCheckBox getWon() {
+	public JCheckBox getWon() {
 		if (mWon == null) {
 			mWon = new JCheckBox();
 			mWon.setText("won");
