@@ -19,7 +19,7 @@ public class Accomodator {
 
 	public Accomodator(List<Cell> cells, Board board, int mnNumber) {
 		mOpenCells = cells;
-		mPlaces = 1;
+		mPlaces = 1; //need to be calculated based on given cells
 		mMnNumber = mnNumber;
 		mStats = new long[mPlaces];
 		mMtrx = new String[mPlaces];
