@@ -2,9 +2,7 @@ package mesh;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Accomodator {
 	private static final String LABELS = "abcdefghijk";
@@ -16,9 +14,10 @@ public class Accomodator {
 	private int mMnNumber;
 	public long[] mStats;
 	public long mAccomNumber;
-	private String[] mMtrx;
+	private String[] mMatrix;
 	private Board mBoard;
 	private List<Cell> mOpenCells;
+	private List<Cell> mCandidates;
 
 	public Accomodator(List<Cell> cells, Board board, int mnNumber) {
 		mOpenCells = cells;
@@ -27,7 +26,6 @@ public class Accomodator {
 		reset();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void reset() {
 		mAccomNumber = 0;
 
@@ -45,11 +43,11 @@ public class Accomodator {
 		}
 
 		for (int i = 0; i < mPlaces; i++) {
-			mMtrx[i] = EMPTY;
+			mMatrix[i] = EMPTY;
 			mStats[i] = 0;
 		}
 
-		Set<Cell> candidates = new HashSet<Cell>();
+		mCandidates = new ArrayList<Cell>();
 		for (int row = 0; row < mBoard.getRows(); row++) {
 			for (int col = 0; col < mBoard.getCols(); col++) {
 				boolean open = false;
@@ -60,51 +58,70 @@ public class Accomodator {
 					}
 				}
 				if (!open) {
-					for (Cell cell : mOpenCells) {
-						int dr = Math.abs(cell.getRow() - row);
-						int dc = Math.abs(cell.getCol() - col);
-						if (dr <= 1 && dc <=1) {
-							candidates.add(new Cell(row, col));	
+					for (Cell openCell : mOpenCells) {
+						int dr = Math.abs(openCell.getRow() - row);
+						int dc = Math.abs(openCell.getCol() - col);
+						if (dr <= 1 && dc <= 1) {
+							Cell closedCell = new Cell(row, col);
+							closedCell.setStatus(CellStatus.CLOSED);
+							closedCell.getAffected().add(openCell);
+							if (mCandidates.contains(closedCell)) {
+								int idx = mCandidates.indexOf(closedCell);
+								Cell find = mCandidates.get(idx);
+								find.getAffected().add(openCell);
+							} else {
+								mCandidates.add(closedCell);
+							}
 						}
 					}
 				}
-
 			}
 		}
-		mPlaces = candidates.size();
+		mPlaces = mCandidates.size();
 		mStats = new long[mPlaces];
-		mMtrx = new String[mPlaces];
-
+		mMatrix = new String[mPlaces];
+		for (int i = 0; i < mPlaces; i++) {
+			mMatrix[i] = EMPTY;
+		}
 	}
 
 	public void incrementStat() {
 		mAccomNumber++;
-		for (int i = 0; i < mMtrx.length; i++) {
-			if (!EMPTY.equals(mMtrx[i])) {
+		for (int i = 0; i < mMatrix.length; i++) {
+			System.out.print(mMatrix[i]);
+			if (!EMPTY.equals(mMatrix[i])) {
 				mStats[i]++;
 			}
 		}
+		System.out.println();
 	}
 
 	public void printStat() {
 		System.out.println("Accomodations number: " + mAccomNumber);
-
 		for (int i = 0; i < mPlaces; i++) {
 			System.out.print(mStats[i] + " ");
 		}
 		System.out.println();
+		
+		for (int i = 0; i < mPlaces; i++) {
+			System.out.print(100*mStats[i]/mAccomNumber+"% ");
+		}
+		System.out.println();
+		
 	}
 
 	public void accomodate() {
 		for (mMnNumber = mMinesLow; mMnNumber <= mMinesHigh; mMnNumber++) {
 			recAccomodate(0, 0);
-			printStat();			
+			printStat();
 		}
 	}
 
 	public void recAccomodate(int pos, int level) {
 		for (int i = pos; i < mPlaces - mMnNumber + 1 + level; i++) {
-			mMtrx[i] = LABELS.substring(level, level + 1);
+			mMatrix[i] = LABELS.substring(level, level + 1);
+			incCandidates(i);
+
 			if (mMnNumber > level + 1) {
 				recAccomodate(i + 1, level + 1);
 			} else {
@@ -112,12 +129,32 @@ public class Accomodator {
 					incrementStat();
 				}
 			}
-			mMtrx[i] = EMPTY;
+			mMatrix[i] = EMPTY;
+			decCandidates(i);
+		}
+	}
+
+	private void decCandidates(int idx) {
+		for (Cell cell : mCandidates.get(idx).getAffected()) {
+			cell.decNumm();
+		}
+	}
+
+	private void incCandidates(int idx) {
+		for (Cell cell : mCandidates.get(idx).getAffected()) {
+			cell.incNumm();
 		}
 	}
 
 	private boolean check() {
-		return true;
+		boolean result = true;
+		for (Cell cell : mOpenCells) {
+			if (cell.getNumm() != cell.getPresumable()) {
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 
 	public static void main(String[] argv) {
@@ -132,7 +169,7 @@ public class Accomodator {
 		Cell top = new Cell();
 		top.setRow(0);
 		top.setCol(1);
-		top.setNumm(3);
+		top.setNumm(2);
 		cells.add(left);
 		cells.add(top);
 
@@ -141,9 +178,9 @@ public class Accomodator {
 		Accomodator a = new Accomodator(cells, board, 4);
 		long begin = (new Date()).getTime();
 		a.accomodate();
-		
+
 		long end = (new Date()).getTime();
-		System.out.println((end - begin) / 1000);
+		System.out.println(((end - begin) / 1000) + " seconds.");
 	}
 
 }
