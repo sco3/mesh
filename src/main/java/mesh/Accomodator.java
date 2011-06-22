@@ -98,6 +98,7 @@ public class Accomodator {
 	public void accomodate() {
 		for (mMnNumber = mMinesLow; mMnNumber <= mMinesHigh; mMnNumber++) {
 			recAccomodate(0, 0);
+			printStat();			
 		}
 	}
 
@@ -140,7 +141,7 @@ public class Accomodator {
 		Accomodator a = new Accomodator(cells, board, 4);
 		long begin = (new Date()).getTime();
 		a.accomodate();
-		a.printStat();
+		
 		long end = (new Date()).getTime();
 		System.out.println((end - begin) / 1000);
 	}
