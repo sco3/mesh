@@ -2,27 +2,27 @@ package mesh;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Accomodator {
 	private static final String LABELS = "abcdefghijk";
 	private static final String EMPTY = "_";
 
-	private int mPlaces = 7;
-	private int mMnNumber = 4;
+	private int mPlaces;
+	private int mMinesLow;
+	private int mMinesHigh;
+	private int mMnNumber;
 	public long[] mStats;
 	public long mAccomNumber;
 	private String[] mMtrx;
 	private Board mBoard;
 	private List<Cell> mOpenCells;
-	private ArrayList<Cell>[] mAffected;
 
 	public Accomodator(List<Cell> cells, Board board, int mnNumber) {
 		mOpenCells = cells;
-		mPlaces = 1; //need to be calculated based on given cells
 		mMnNumber = mnNumber;
-		mStats = new long[mPlaces];
-		mMtrx = new String[mPlaces];
 		mBoard = board;
 		reset();
 	}
@@ -31,30 +31,49 @@ public class Accomodator {
 	public void reset() {
 		mAccomNumber = 0;
 
+		mMinesHigh = 0;
+		mMinesLow = Integer.MIN_VALUE;
+		for (Cell cell : mOpenCells) {
+			mMinesHigh += cell.getNumm();
+			if (mMinesLow < cell.getNumm()) {
+				mMinesLow = cell.getNumm();
+			}
+		}
+
+		if (mMinesHigh > mMnNumber) {
+			mMinesHigh = mMnNumber;
+		}
+
 		for (int i = 0; i < mPlaces; i++) {
 			mMtrx[i] = EMPTY;
 			mStats[i] = 0;
-
 		}
 
-		int allCells = mBoard.getCols() * mBoard.getRows();
-		mAffected = new ArrayList[allCells];
-		for (int i = 0; i < allCells; i++) {
-			mAffected[i] = new ArrayList<Cell>();
-		}
-
-		int place = 0;
+		Set<Cell> candidates = new HashSet<Cell>();
 		for (int row = 0; row < mBoard.getRows(); row++) {
 			for (int col = 0; col < mBoard.getCols(); col++) {
+				boolean open = false;
 				for (Cell cell : mOpenCells) {
-					if (Math.abs(cell.getRow() - row) <= 0
-							&& Math.abs(cell.getCol() - col) <= 0) {
-						mAffected[place].add(cell);
+					if (cell.getRow() == row && cell.getCol() == col) {
+						open = true;
+						break;
 					}
 				}
-				place++;
+				if (!open) {
+					for (Cell cell : mOpenCells) {
+						int dr = Math.abs(cell.getRow() - row);
+						int dc = Math.abs(cell.getCol() - col);
+						if (dr <= 1 && dc <=1) {
+							candidates.add(new Cell(row, col));	
+						}
+					}
+				}
+
 			}
 		}
+		mPlaces = candidates.size();
+		mStats = new long[mPlaces];
+		mMtrx = new String[mPlaces];
 
 	}
 
@@ -77,7 +96,9 @@ public class Accomodator {
 	}
 
 	public void accomodate() {
-		recAccomodate(0, 0);
+		for (mMnNumber = mMinesLow; mMnNumber <= mMinesHigh; mMnNumber++) {
+			recAccomodate(0, 0);
+		}
 	}
 
 	public void recAccomodate(int pos, int level) {
@@ -104,11 +125,13 @@ public class Accomodator {
 		Cell left = new Cell();
 		left.setRow(1);
 		left.setCol(0);
+
 		left.setNumm(1);
 
 		Cell top = new Cell();
 		top.setRow(0);
 		top.setCol(1);
+		top.setNumm(3);
 		cells.add(left);
 		cells.add(top);
 

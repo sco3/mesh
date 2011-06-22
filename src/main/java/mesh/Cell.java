@@ -4,43 +4,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cell {
-	private int row;
-	private int col;
-	private List<Cell> adjacent;
-	private int numm;
-	private String label;
+	private int mRow;
+	private int mCol;
+	private List<Cell> mAdj;
+	private int mMineNumber;
+	private String mLabel;
+	
+	public Cell (int row, int col) {
+		mRow = row;
+		mCol = col;
+		mAdj = new ArrayList<Cell>(8);
+	}
 	
 	public Cell () {
-		adjacent = new ArrayList<Cell>(8);
+		this(0,0);
 	}
 	public void setRow(int row) {
-		this.row = row;
+		this.mRow = row;
 	}
 	public int getRow() {
-		return row;
+		return mRow;
 	}
 	public void setCol(int col) {
-		this.col = col;
+		this.mCol = col;
 	}
 	public int getCol() {
-		return col;
+		return mCol;
 	}
 	public void setAdjacent(List<Cell> adjacent) {
-		this.adjacent = adjacent;
+		this.mAdj = adjacent;
 	}
 	public List<Cell> getAdjacent() {
-		return adjacent;
+		return mAdj;
 	}
 	public void setNumm(int numm) {
-		this.numm = numm;
+		this.mMineNumber = numm;
 	}
 	public int getNumm() {
-		return numm;
+		return mMineNumber;
 	}
 	public void setLabel(String label) {
-		this.label = label;
+		this.mLabel = label;
 	}
 	public String getLabel() {
-		return label;
+		return mLabel;
+	}
+	
+	public boolean equals (Object obj) {
+		boolean result = false;
+		if (obj != null && (obj instanceof Cell)) {
+			Cell other = (Cell)obj;
+			if (other.getRow() == mRow && other.getCol() == mCol) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public String toString () {
+	   return "("+mRow+","+mCol+")";	
+	}
+	
+	public int hashCode() {
+		return 1000*mRow+mCol;
 	}
 }
