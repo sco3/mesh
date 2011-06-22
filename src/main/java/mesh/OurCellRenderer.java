@@ -3,6 +3,7 @@
  */
 package mesh;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
@@ -40,6 +41,7 @@ final class OurCellRenderer implements TableCellRenderer {
 		if (cmp instanceof DefaultTableCellRenderer) {
 			DefaultTableCellRenderer dcr = (DefaultTableCellRenderer) cmp;
 			dcr.setHorizontalAlignment(SwingConstants.CENTER);
+			//dcr.setBackground(Color.LIGHT_GRAY);
 		}
 
 		return cmp;

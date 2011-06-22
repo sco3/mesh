@@ -11,17 +11,17 @@ public class Accomodator {
 	private int mPlaces;
 	private int mMinesLow;
 	private int mMinesHigh;
-	private int mMnNumber;
+	private int mMinesNumber;
 	public long[] mStats;
 	public long mAccomNumber;
 	private String[] mMatrix;
 	private Board mBoard;
 	private List<Cell> mOpenCells;
 	private List<Cell> mCandidates;
+	
 
-	public Accomodator(List<Cell> cells, Board board, int mnNumber) {
+	public Accomodator(List<Cell> cells, Board board) {
 		mOpenCells = cells;
-		mMnNumber = mnNumber;
 		mBoard = board;
 		reset();
 	}
@@ -38,8 +38,8 @@ public class Accomodator {
 			}
 		}
 
-		if (mMinesHigh > mMnNumber) {
-			mMinesHigh = mMnNumber;
+		if (mMinesHigh > mMinesNumber) {
+			mMinesHigh = mMinesNumber;
 		}
 
 		for (int i = 0; i < mPlaces; i++) {
@@ -111,18 +111,18 @@ public class Accomodator {
 	}
 
 	public void accomodate() {
-		for (mMnNumber = mMinesLow; mMnNumber <= mMinesHigh; mMnNumber++) {
+		for (mMinesNumber = mMinesLow; mMinesNumber <= mMinesHigh; mMinesNumber++) {
 			recAccomodate(0, 0);
 			printStat();
 		}
 	}
 
 	public void recAccomodate(int pos, int level) {
-		for (int i = pos; i < mPlaces - mMnNumber + 1 + level; i++) {
+		for (int i = pos; i < mPlaces - mMinesNumber + 1 + level; i++) {
 			mMatrix[i] = LABELS.substring(level, level + 1);
 			incCandidates(i);
 
-			if (mMnNumber > level + 1) {
+			if (mMinesNumber > level + 1) {
 				recAccomodate(i + 1, level + 1);
 			} else {
 				if (check()) {
@@ -175,12 +175,22 @@ public class Accomodator {
 
 		Board board = new Board(4, 4);
 
-		Accomodator a = new Accomodator(cells, board, 4);
+		Accomodator a = new Accomodator(cells, board);
+		a.setMinesNumber(4);
+		
 		long begin = (new Date()).getTime();
 		a.accomodate();
 
 		long end = (new Date()).getTime();
 		System.out.println(((end - begin) / 1000) + " seconds.");
+	}
+
+	public void setMinesNumber(int minesNumber) {
+		mMinesNumber = minesNumber;
+	}
+
+	public int getMinesNumber() {
+		return mMinesNumber;
 	}
 
 }

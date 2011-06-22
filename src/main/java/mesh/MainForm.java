@@ -28,6 +28,7 @@ public class MainForm extends JFrame {
 	private JButton mStat;
 	private JButton mImportCsv;
 	private JCheckBox mWon;
+	private JButton mProbCalc;
 
 	public JCheckBox getWon() {
 		if (mWon == null) {
@@ -147,7 +148,7 @@ public class MainForm extends JFrame {
 		});
 		db.start();
 
-		setSize(450, 502);
+		setSize(470, 520);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		GroupLayout layout = new GroupLayout(getContentPane());
@@ -165,7 +166,8 @@ public class MainForm extends JFrame {
 								.addComponent(getImportButton(),
 										GroupLayout.PREFERRED_SIZE,
 										GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)).addGroup(
+										GroupLayout.PREFERRED_SIZE)) //
+				.addGroup(
 
 				layout.createParallelGroup() //
 						.addComponent(getRandom()) //
@@ -173,7 +175,12 @@ public class MainForm extends JFrame {
 						.addComponent(getSave()) //
 						.addComponent(getWon()) //
 						.addComponent(getStat()) //
-						.addComponent(getImportCsv()))
+						.addComponent(getImportCsv())) //
+				.addGroup(
+
+				layout.createParallelGroup() //
+						.addComponent(getProbCalc())//
+				)
 
 		);
 
@@ -195,6 +202,11 @@ public class MainForm extends JFrame {
 								.addComponent(getWon()) //
 								.addComponent(getStat()) //
 								.addComponent(getImportCsv())) //
+						.addGroup( //
+
+								layout.createSequentialGroup() //
+										.addComponent(getProbCalc()) //		
+						)
 
 				);
 
@@ -216,6 +228,14 @@ public class MainForm extends JFrame {
 
 	public void setGridView(Component gridView) {
 		mGridView = gridView;
+	}
+
+	private JButton getProbCalc() {
+		if (mProbCalc == null) {
+			mProbCalc = new JButton("Calc");
+			mProbCalc.addActionListener(new ProbabilityAction(this));
+		}
+		return mProbCalc;
 	}
 
 }
