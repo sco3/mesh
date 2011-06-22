@@ -18,7 +18,6 @@ public class Accomodator {
 	private Board mBoard;
 	private List<Cell> mOpenCells;
 	private List<Cell> mCandidates;
-	
 
 	public Accomodator(List<Cell> cells, Board board) {
 		mOpenCells = cells;
@@ -62,9 +61,10 @@ public class Accomodator {
 					for (Cell openCell : mOpenCells) {
 						int dr = Math.abs(openCell.getRow() - row);
 						int dc = Math.abs(openCell.getCol() - col);
+						Cell closedCell = new Cell(row, col);
+						closedCell.setStatus(CellStatus.CLOSED);
+
 						if (dr <= 1 && dc <= 1) {
-							Cell closedCell = new Cell(row, col);
-							closedCell.setStatus(CellStatus.CLOSED);
 							closedCell.getAffected().add(openCell);
 							if (mCandidates.contains(closedCell)) {
 								int idx = mCandidates.indexOf(closedCell);
@@ -73,8 +73,16 @@ public class Accomodator {
 							} else {
 								mCandidates.add(closedCell);
 							}
+						} else if (dr == 0 && dc == 0) {
+							// nothing
+						} else {
+							if (!mCandidates.contains(closedCell)) {
+								mCandidates.add(closedCell);
+							}
 						}
 					}
+				} else {
+
 				}
 			}
 		}
@@ -95,20 +103,25 @@ public class Accomodator {
 			}
 		}
 		System.out.println();
+		for (int i = 0; i < mMatrix.length; i++) {
+			System.out.print(mMatrix[i]);
+		}
+		System.out.println();
 	}
 
 	public void printStat() {
+		System.out.println("Cells to check: " + mCandidates.size());
 		System.out.println("Accomodations number: " + mAccomNumber);
 		for (int i = 0; i < mPlaces; i++) {
 			System.out.print(mStats[i] + " ");
 		}
 		System.out.println();
-		
+
 		for (int i = 0; i < mPlaces; i++) {
-			System.out.print(100*mStats[i]/mAccomNumber+"% ");
+			System.out.print(100 * mStats[i] / mAccomNumber + "% ");
 		}
 		System.out.println();
-		
+
 	}
 
 	public void accomodate() {
@@ -175,23 +188,15 @@ public class Accomodator {
 		cells.add(top);
 
 		Board board = new Board(4, 4);
+		board.setMines(4);
 
 		Accomodator a = new Accomodator(cells, board);
-		a.setMinesNumber(4);
-		
+
 		long begin = (new Date()).getTime();
 		a.accomodate();
 
 		long end = (new Date()).getTime();
 		System.out.println(((end - begin) / 1000) + " seconds.");
-	}
-
-	public void setMinesNumber(int minesNumber) {
-		mMinesNumber = minesNumber;
-	}
-
-	public int getMinesNumber() {
-		return mMinesNumber;
 	}
 
 	public void setStats(long[] stats) {
