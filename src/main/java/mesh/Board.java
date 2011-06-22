@@ -3,6 +3,7 @@ package mesh;
 public class Board {
 	private int mRows;
 	private int mCols;
+	private int mMines;
 
 	public Board(int rows, int cols) {
 		mRows = rows;
@@ -23,5 +24,13 @@ public class Board {
 
 	public int getCols() {
 		return mCols;
+	}
+
+	public void setMines(int mines) {
+		mMines = mines;
+	}
+
+	public int getMines() {
+		return mMines;
 	}
 }

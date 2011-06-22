@@ -12,8 +12,8 @@ public class Accomodator {
 	private int mMinesLow;
 	private int mMinesHigh;
 	private int mMinesNumber;
-	public long[] mStats;
-	public long mAccomNumber;
+	private long[] mStats;
+	private long mAccomNumber;
 	private String[] mMatrix;
 	private Board mBoard;
 	private List<Cell> mOpenCells;
@@ -23,6 +23,7 @@ public class Accomodator {
 	public Accomodator(List<Cell> cells, Board board) {
 		mOpenCells = cells;
 		mBoard = board;
+		mMinesNumber = board.getMines();
 		reset();
 	}
 
@@ -191,6 +192,30 @@ public class Accomodator {
 
 	public int getMinesNumber() {
 		return mMinesNumber;
+	}
+
+	public void setStats(long[] stats) {
+		mStats = stats;
+	}
+
+	public long[] getStats() {
+		return mStats;
+	}
+
+	public void setAccomNumber(long accomNumber) {
+		mAccomNumber = accomNumber;
+	}
+
+	public long getAccomNumber() {
+		return mAccomNumber;
+	}
+
+	public void setCandidates(List<Cell> candidates) {
+		mCandidates = candidates;
+	}
+
+	public List<Cell> getCandidates() {
+		return mCandidates;
 	}
 
 }
