@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Accomodator {
 	private static final String LABELS = "abcdefghijk";
-	private static final String EMPTY = "_";
+	private static final String EMPTY = ".";
 
 	private int mPlaces;
 	private int mMinesLow;
@@ -63,7 +63,6 @@ public class Accomodator {
 						int dc = Math.abs(openCell.getCol() - col);
 						Cell closedCell = new Cell(row, col);
 						closedCell.setStatus(CellStatus.CLOSED);
-
 						if (dr <= 1 && dc <= 1) {
 							closedCell.getAffected().add(openCell);
 							if (mCandidates.contains(closedCell)) {
@@ -73,16 +72,8 @@ public class Accomodator {
 							} else {
 								mCandidates.add(closedCell);
 							}
-						} else if (dr == 0 && dc == 0) {
-							// nothing
-						} else {
-							if (!mCandidates.contains(closedCell)) {
-								mCandidates.add(closedCell);
-							}
 						}
 					}
-				} else {
-
 				}
 			}
 		}
@@ -101,10 +92,6 @@ public class Accomodator {
 			if (!EMPTY.equals(mMatrix[i])) {
 				mStats[i]++;
 			}
-		}
-		System.out.println();
-		for (int i = 0; i < mMatrix.length; i++) {
-			System.out.print(mMatrix[i]);
 		}
 		System.out.println();
 	}
@@ -187,8 +174,8 @@ public class Accomodator {
 		cells.add(left);
 		cells.add(top);
 
-		Board board = new Board(4, 4);
-		board.setMines(4);
+		Board board = new Board(7, 7);
+		board.setMines(11);
 
 		Accomodator a = new Accomodator(cells, board);
 
