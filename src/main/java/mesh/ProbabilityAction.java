@@ -81,9 +81,11 @@ final class ProbabilityAction implements ActionListener {
 				double dProb = 100.0 * a.getStats()[idx] / a.getAccomNumber();
 				long prob = Math.round(dProb);
 				String str = Long.toString(prob);
-				if (prob == 0) {
-					str = ".";
-				} else if (prob == 100) {
+//				if (dProb == 0) {
+//					str = "0%";
+//				} else 
+				
+				if (prob == 100) {
 					str = "Flag";
 				} else {
 					str = Long.toString(prob) + "%";

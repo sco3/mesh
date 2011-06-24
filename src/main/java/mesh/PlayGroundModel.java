@@ -43,11 +43,7 @@ final class PlayGroundModel extends  AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int colIndex) {
-
 		String value = matrix[rowIndex][colIndex];
-		if (value==null) {
-			value="";
-		}
 		return value;
 	}
 

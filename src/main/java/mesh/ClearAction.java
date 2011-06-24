@@ -21,15 +21,25 @@ final class ClearAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		e.getModifiers();
+		int mod = e.getModifiers() & ActionEvent.CTRL_MASK;
+		System.out.println (mod);
 		int size = mForm.getDataModel().getSize();
-		
+
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				mForm.getDataModel().matrix[i][j]="";
+				if (mod > 0) {
+					String str = mForm.getDataModel().matrix[i][j];
+					if ((str.indexOf("%") >= 0)) {
+						mForm.getDataModel().matrix[i][j] = "";
+					} 
+
+				} else {
+					mForm.getDataModel().matrix[i][j] = "";
+				}
+
 			}
 		}
 		mForm.getDataModel().fireTableDataChanged();
-		
+
 	}
 }
