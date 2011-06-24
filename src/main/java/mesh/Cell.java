@@ -11,6 +11,7 @@ public class Cell {
 	private int mPresumable;
 	private String mLabel;
 	private CellStatus mStatus;
+	private int mFlags;
 
 	public Cell(int row, int col) {
 		mRow = row;
@@ -103,5 +104,13 @@ public class Cell {
 
 	public int getPresumable() {
 		return mPresumable;
+	}
+
+	public void setFlags(int flags) {
+		mFlags = flags;
+	}
+
+	public int getFlags() {
+		return mFlags;
 	}
 }

@@ -148,13 +148,14 @@ public class Accomodator {
 			long newAn = getAccomNumber();
 
 			if (newAn > oldAn) {
+				System.out.println("Mines: " + mMinesNumber);
 				int otherCount = getAllCellSize() - mCandidates.size()
 						- mOpenCells.size() - mKnownCells.size();
 				int otherMines = mBoard.getMines() - mMinesNumber;
 				mOtherAll += Accomodations.accnum[otherCount][otherMines];
 				mOtherSingle += Accomodations.single[otherCount][otherMines];
+				printStat();
 			}
-			printStat();
 		}
 
 		if (mAccomNumber == 0) {
@@ -200,7 +201,7 @@ public class Accomodator {
 	private boolean check() {
 		boolean result = true;
 		for (Cell cell : mOpenCells) {
-			if (cell.getNumm() != cell.getPresumable()) {
+			if (cell.getNumm() != cell.getPresumable()+cell.getFlags()) {
 				result = false;
 				break;
 			}

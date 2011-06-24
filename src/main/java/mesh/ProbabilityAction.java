@@ -34,6 +34,9 @@ final class ProbabilityAction implements ActionListener {
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
 				String str = mForm.getDataModel().matrix[row][col];
+				if (str.indexOf("%") >= 0) {
+					mForm.getDataModel().matrix[row][col] = "";
+				}
 				try {
 					if (".".equals(str)) {
 						str = "0";
@@ -44,7 +47,6 @@ final class ProbabilityAction implements ActionListener {
 						cell.setCol(col);
 						cell.setStatus(CellStatus.FLAG);
 						knownCells.add(cell);
-
 					} else {
 						int numMines = Integer.parseInt(str);
 						Cell cell = new Cell();
@@ -58,6 +60,8 @@ final class ProbabilityAction implements ActionListener {
 				}
 			}
 		}
+		
+		mForm.mDataModel.fireTableDataChanged();
 
 		Board board = new Board(size, size);
 		board.setMines(11);

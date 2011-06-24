@@ -21,6 +21,7 @@ final class ClearAction implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		e.getModifiers();
 		int size = mForm.getDataModel().getSize();
 		
 		for (int i = 0; i < size; i++) {
