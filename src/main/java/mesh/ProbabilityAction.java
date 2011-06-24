@@ -42,11 +42,11 @@ final class ProbabilityAction implements ActionListener {
 						str = "0";
 					}
 					if ("Flag".equals(str)) {
-						Cell cell = new Cell();
-						cell.setRow(row);
-						cell.setCol(col);
-						cell.setStatus(CellStatus.FLAG);
-						knownCells.add(cell);
+//						Cell cell = new Cell();
+//						cell.setRow(row);
+//						cell.setCol(col);
+//						cell.setStatus(CellStatus.FLAG);
+//						knownCells.add(cell);
 					} else {
 						int numMines = Integer.parseInt(str);
 						Cell cell = new Cell();
