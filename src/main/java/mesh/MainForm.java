@@ -237,5 +237,24 @@ public class MainForm extends JFrame {
 		}
 		return mProbCalc;
 	}
+	void clear(int mod) {
+		int size = getDataModel().getSize();
+
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (mod > 0) {
+					String str = getDataModel().matrix[i][j];
+					if ((str.indexOf("%") >= 0) || ("Flag".equals(str))) {
+						getDataModel().matrix[i][j] = "";
+					}
+
+				} else {
+					getDataModel().matrix[i][j] = "";
+				}
+
+			}
+		}
+		getDataModel().fireTableDataChanged();
+	}
 
 }
