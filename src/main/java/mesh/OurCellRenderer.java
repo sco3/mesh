@@ -44,7 +44,7 @@ final class OurCellRenderer implements TableCellRenderer {
 			dcr.setHorizontalAlignment(SwingConstants.CENTER);
 			
 			//dcr.setBackground(Color.LIGHT_GRAY);
-			dcr.getFont().
+			
 			if ("1".equals(mMainForm.getDataModel().matrix[row][column])) {
 				dcr.setForeground(Color.BLUE);
 				
