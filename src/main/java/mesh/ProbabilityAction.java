@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 //import javax.swing.JOptionPane;
 
 final class ProbabilityAction implements ActionListener {
@@ -56,18 +58,39 @@ final class ProbabilityAction implements ActionListener {
 
 		List<Cell> cands = a.getCandidates();
 		int idx = 0;
-		for (Cell cand : cands) {
-			long prob = 100 * a.getStats()[idx] / a.getAccomNumber();
-			mForm.getDataModel().matrix[cand.getRow()][cand.getCol()] = prob
-					+ "%";
-			idx++;
+
+		if (a.getAccomNumber() > 0) {
+			for (Cell cand : cands) {
+				double dProb = 100.0 * a.getStats()[idx] / a.getAccomNumber();
+				long prob = Math.round(dProb);
+				String str = Long.toString(prob);
+				if (prob == 0) {
+					str = ".";
+				} else if (prob == 100) {
+					str = "Flag";
+				} else {
+					str = Long.toString(prob) + "%";
+				}
+				mForm.getDataModel().matrix[cand.getRow()][cand.getCol()] = str;
+				idx++;
+			}
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+					String str = mForm.getDataModel().matrix[i][j];
+					if ("".equals(str)) {
+						mForm.getDataModel().matrix[i][j] = a
+								.getOtherProbability()
+								+ "%";
+					}
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(mForm, "None found.", "Info",
+					JOptionPane.INFORMATION_MESSAGE);
+
 		}
 
 		mForm.getDataModel().fireTableDataChanged();
-
-		// JOptionPane.showMessageDialog(mForm, "Done in "
-		// + ((end - begin) / 1000) + " seconds.", "Info",
-		// JOptionPane.INFORMATION_MESSAGE);
 
 	}
 }

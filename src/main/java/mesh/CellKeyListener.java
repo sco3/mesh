@@ -48,10 +48,11 @@ final class CellKeyListener implements KeyListener {
 				inst.getDataModel().matrix[row][col] = "Closed";
 			} else if (e.getKeyChar() == 'B' || e.getKeyChar() == 'b') {
 				inst.getDataModel().matrix[row][col] = "Bomb";
+			} else if (e.getKeyChar() == 'R' || e.getKeyChar() == 'r') {
+				inst.getDataModel().matrix[row][col] = "Random";
+			} else if (e.getKeyChar() == '.') {
+				inst.getDataModel().matrix[row][col] = ".";
 			}
-			 else if (e.getKeyChar() == 'R' || e.getKeyChar() == 'r') {
-					inst.getDataModel().matrix[row][col] = "Random";
-				}			
 			inst.getDataModel().fireTableCellUpdated(row, col);
 
 		}
