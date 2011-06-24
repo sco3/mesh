@@ -22,6 +22,7 @@ final class OurCellRenderer implements TableCellRenderer {
 	OurCellRenderer(MainForm mainForm, TableCellRenderer rndr) {
 		mMainForm = mainForm;
 		mRndr = rndr;
+		
 	}
 
 	@Override
@@ -41,8 +42,16 @@ final class OurCellRenderer implements TableCellRenderer {
 		if (cmp instanceof DefaultTableCellRenderer) {
 			DefaultTableCellRenderer dcr = (DefaultTableCellRenderer) cmp;
 			dcr.setHorizontalAlignment(SwingConstants.CENTER);
+			
 			//dcr.setBackground(Color.LIGHT_GRAY);
-		}
+			dcr.getFont().
+			if ("1".equals(mMainForm.getDataModel().matrix[row][column])) {
+				dcr.setForeground(Color.BLUE);
+				
+			} else if ("2".equals(mMainForm.getDataModel().matrix[row][column])) {
+				dcr.setForeground(Color.GREEN);
+			}
+ 		}
 
 		return cmp;
 	}
