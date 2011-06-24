@@ -29,17 +29,30 @@ final class ProbabilityAction implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 		List<Cell> openCells = new ArrayList<Cell>();
+		List<Cell> knownCells = new ArrayList<Cell>();
 		int size = mForm.getDataModel().getSize();
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
 				String str = mForm.getDataModel().matrix[row][col];
 				try {
-					int numMines = Integer.parseInt(str);
-					Cell cell = new Cell();
-					cell.setRow(row);
-					cell.setCol(col);
-					cell.setNumm(numMines);
-					openCells.add(cell);
+					if (".".equals(str)) {
+						str = "0";
+					}
+					if ("Flag".equals(str)) {
+						Cell cell = new Cell();
+						cell.setRow(row);
+						cell.setCol(col);
+						cell.setStatus(CellStatus.FLAG);
+						knownCells.add(cell);
+
+					} else {
+						int numMines = Integer.parseInt(str);
+						Cell cell = new Cell();
+						cell.setRow(row);
+						cell.setCol(col);
+						cell.setNumm(numMines);
+						openCells.add(cell);
+					}
 				} catch (Exception e) {
 					// ok this is not a number
 				}
@@ -49,7 +62,7 @@ final class ProbabilityAction implements ActionListener {
 		Board board = new Board(size, size);
 		board.setMines(11);
 
-		Accomodator a = new Accomodator(openCells, board);
+		Accomodator a = new Accomodator(openCells, knownCells, board);
 
 		long begin = (new Date()).getTime();
 		a.accomodate();
@@ -85,6 +98,16 @@ final class ProbabilityAction implements ActionListener {
 				}
 			}
 		} else {
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+					String str = mForm.getDataModel().matrix[i][j];
+					if ("".equals(str)) {
+						mForm.getDataModel().matrix[i][j] = a
+								.getOtherProbability()
+								+ "%";
+					}
+				}
+			}
 			JOptionPane.showMessageDialog(mForm, "None found.", "Info",
 					JOptionPane.INFORMATION_MESSAGE);
 

@@ -1,5 +1,5 @@
 package mesh;
 
 public enum CellStatus {
-	EMPTY, MINE, OPEN, CLOSED
+	EMPTY, MINE, OPEN, CLOSED, FLAG
 }

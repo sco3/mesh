@@ -17,23 +17,24 @@ public class Accomodator {
 	private String[] mMatrix;
 	private Board mBoard;
 	private List<Cell> mOpenCells;
+	private List<Cell> mKnownCells;
 	private List<Cell> mCandidates;
 	// unopened cells count per cell
 	private long mOtherSingle;
 	// unopened cell count for all
 	private long mOtherAll;
-	
-	
-	
+
 	public long getOtherProbability() {
-		return Math.round(100.0*mOtherSingle/mOtherAll);
-	}
-	private int getAllCellSize() {
-		return mBoard.getCols()*mBoard.getRows();
+		return Math.round(100.0 * mOtherSingle / mOtherAll);
 	}
 
-	public Accomodator(List<Cell> cells, Board board) {
+	private int getAllCellSize() {
+		return mBoard.getCols() * mBoard.getRows();
+	}
+
+	public Accomodator(List<Cell> cells, List<Cell> knownCells, Board board) {
 		mOpenCells = cells;
+		mKnownCells = knownCells;
 		mBoard = board;
 		mMinesNumber = board.getMines();
 		reset();
@@ -63,6 +64,15 @@ public class Accomodator {
 		mCandidates = new ArrayList<Cell>();
 		for (int row = 0; row < mBoard.getRows(); row++) {
 			for (int col = 0; col < mBoard.getCols(); col++) {
+				boolean known = false;
+				for (Cell cell : mKnownCells) {
+					if (cell.getRow() == row && cell.getCol() == col) {
+						known = true;
+					}
+				}
+				if (known) {
+					continue;
+				}
 				boolean open = false;
 				for (Cell cell : mOpenCells) {
 					if (cell.getRow() == row && cell.getCol() == col) {
@@ -116,7 +126,7 @@ public class Accomodator {
 			System.out.print(mStats[i] + " ");
 		}
 		System.out.println();
-		
+
 		if (mAccomNumber != 0) {
 			for (int i = 0; i < mPlaces; i++) {
 				System.out.print(100 * mStats[i] / mAccomNumber + "% ");
@@ -126,27 +136,36 @@ public class Accomodator {
 			System.out.println("None found!");
 		}
 
-
 	}
 
 	public void accomodate() {
 		mOtherAll = 0;
 		mOtherSingle = 0;
-		
+
 		for (mMinesNumber = mMinesLow; mMinesNumber <= mMinesHigh; mMinesNumber++) {
 			long oldAn = getAccomNumber();
 			recAccomodate(0, 0);
 			long newAn = getAccomNumber();
-			
+
 			if (newAn > oldAn) {
-				int otherCount = getAllCellSize()-mCandidates.size()-mOpenCells.size();
+				int otherCount = getAllCellSize() - mCandidates.size()
+						- mOpenCells.size() - mKnownCells.size();
 				int otherMines = mBoard.getMines() - mMinesNumber;
 				mOtherAll += Accomodations.accnum[otherCount][otherMines];
 				mOtherSingle += Accomodations.single[otherCount][otherMines];
 			}
-			
 			printStat();
 		}
+
+		if (mAccomNumber == 0) {
+			int otherCount = getAllCellSize() - mCandidates.size()
+					- mOpenCells.size() - mKnownCells.size();
+			int otherMines = mBoard.getMines() - getFlagCount();
+			mOtherAll += Accomodations.accnum[otherCount][otherMines];
+			mOtherSingle += Accomodations.single[otherCount][otherMines];
+		}
+
+		printStat();
 	}
 
 	public void recAccomodate(int pos, int level) {
@@ -208,7 +227,9 @@ public class Accomodator {
 		Board board = new Board(7, 7);
 		board.setMines(11);
 
-		Accomodator a = new Accomodator(cells, board);
+		List<Cell> known = new ArrayList<Cell>();
+
+		Accomodator a = new Accomodator(cells, known, board);
 
 		long begin = (new Date()).getTime();
 		a.accomodate();
@@ -239,6 +260,17 @@ public class Accomodator {
 
 	public List<Cell> getCandidates() {
 		return mCandidates;
+	}
+
+	public int getFlagCount() {
+		int result = 0;
+		for (Cell cell : mKnownCells) {
+			if (CellStatus.FLAG.equals(cell.getStatus())) {
+				result++;
+			}
+		}
+		return result;
+
 	}
 
 }
