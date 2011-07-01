@@ -5,6 +5,9 @@ package mesh;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -37,20 +40,31 @@ final class OurCellRenderer implements TableCellRenderer {
 			table.setRowHeight(height);
 
 		}
+		
 		Component cmp = mRndr.getTableCellRendererComponent(table, value,
 				isSelected, hasFocus, row, column);
+		
 		if (cmp instanceof DefaultTableCellRenderer) {
 			DefaultTableCellRenderer dcr = (DefaultTableCellRenderer) cmp;
 			dcr.setHorizontalAlignment(SwingConstants.CENTER);
+			Font font = dcr.getFont();
+			Map atts = font.getAttributes();
+			atts.put(TextAttribute.WEIGHT, new Float(2));
+			Font newFont = new Font(atts); 
 			
-			//dcr.setBackground(Color.LIGHT_GRAY);
+			dcr.setFont(newFont);
+			dcr.getFontMetrics(dcr.getFont());
+			
+			
 			
 			if ("1".equals(mMainForm.getDataModel().matrix[row][column])) {
 				dcr.setForeground(Color.BLUE);
 				
 			} else if ("2".equals(mMainForm.getDataModel().matrix[row][column])) {
 				dcr.setForeground(Color.GREEN);
-			}
+			} else if ("3".equals(mMainForm.getDataModel().matrix[row][column])) {
+				dcr.setForeground(Color.RED);
+			} 
  		}
 
 		return cmp;
