@@ -130,5 +130,4 @@
          <url>http://maven-annotation-plugin.googlecode.com/svn/trunk/mavenrepo</url>
       </pluginRepository>
    </pluginRepositories>
-
 </project>
