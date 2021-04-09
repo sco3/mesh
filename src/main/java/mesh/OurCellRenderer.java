@@ -25,12 +25,12 @@ final class OurCellRenderer implements TableCellRenderer {
 	OurCellRenderer(MainForm mainForm, TableCellRenderer rndr) {
 		mMainForm = mainForm;
 		mRndr = rndr;
-		
+
 	}
 
 	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value,
-			boolean isSelected, boolean hasFocus, int row, int column) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column) {
 
 		int height = mMainForm.getGridView().getHeight();
 		if ((height != 0) && (h != height)) {
@@ -40,32 +40,32 @@ final class OurCellRenderer implements TableCellRenderer {
 			table.setRowHeight(height);
 
 		}
-		
-		Component cmp = mRndr.getTableCellRendererComponent(table, value,
-				isSelected, hasFocus, row, column);
-		
+
+		Component cmp = mRndr.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
 		if (cmp instanceof DefaultTableCellRenderer) {
 			DefaultTableCellRenderer dcr = (DefaultTableCellRenderer) cmp;
 			dcr.setHorizontalAlignment(SwingConstants.CENTER);
 			Font font = dcr.getFont();
-			Map atts = font.getAttributes();
+			@SuppressWarnings("unchecked")
+			Map<TextAttribute, Object> atts = (Map<TextAttribute, Object>) font.getAttributes();
 			atts.put(TextAttribute.WEIGHT, new Float(2));
-			Font newFont = new Font(atts); 
-			
+			Font newFont = new Font(atts);
+
 			dcr.setFont(newFont);
 			dcr.getFontMetrics(dcr.getFont());
-			
-			
-			
+
 			if ("1".equals(mMainForm.getDataModel().matrix[row][column])) {
 				dcr.setForeground(Color.BLUE);
-				
+
 			} else if ("2".equals(mMainForm.getDataModel().matrix[row][column])) {
 				dcr.setForeground(Color.GREEN);
 			} else if ("3".equals(mMainForm.getDataModel().matrix[row][column])) {
 				dcr.setForeground(Color.RED);
-			} 
- 		}
+			} else {
+				dcr.setForeground(Color.GRAY);
+			}
+		}
 
 		return cmp;
 	}

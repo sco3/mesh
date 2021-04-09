@@ -1,7 +1,7 @@
 package mesh;
 
 public class AccomTmp {
-	private static final String LABELS = "abcdefghijk";
+	//private static final String LABELS = "abcdefghijk";
 	private static final String EMPTY = "_";
 	
 	public static int SIZE = 49;

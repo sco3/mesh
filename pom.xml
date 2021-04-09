@@ -1,133 +1,119 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 
-   <modelVersion>4.0.0</modelVersion>
-   <groupId>mesh</groupId>
-   <artifactId>Mesh</artifactId>
-   <packaging>jar</packaging>
-   <version>1.0.0.SNAPSHOT</version>
-   <name>mesh</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>mesh</groupId>
+	<artifactId>Mesh</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0.0.SNAPSHOT</version>
+	<name>mesh</name>
 
-   <build>
-      <finalName>mesh</finalName>
-      <plugins>
+	<build>
+		<finalName>mesh</finalName>
+		<plugins>
 
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-               <source>1.6</source>
-               <target>1.6</target>
-            </configuration>
-         </plugin>
-         
-         <!--
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-               <execution>
-                  <id>copy-dependencies</id>
-                  <phase>generate-sources</phase>
-                  <goals>
-                     <goal>copy-dependencies</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
-         --> 
-         <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>
-               <archive>
-                  <manifest>
-                     <mainClass>mesh.MainForm</mainClass>
-                  </manifest>
-               </archive>
-               <descriptors>
-                  <descriptor>assembly.xml</descriptor>
-               </descriptors>
-            </configuration>
-            <executions>
-               <execution>
-                  <id>make-assembly</id>
-                  <phase>package</phase>
-                  <goals>
-                     <goal>single</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-dependency-plugin</artifactId> 
+				<executions> <execution> <id>copy-dependencies</id> <phase>generate-sources</phase> 
+				<goals> <goal>copy-dependencies</goal> </goals> </execution> </executions> 
+				</plugin> -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>mesh.MainForm</mainClass>
+						</manifest>
+					</archive>
+					<descriptors>
+						<descriptor>assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-         <plugin>
-            <groupId>org.bsc.maven</groupId>
-            <artifactId>maven-processor-plugin</artifactId>
-            <version>1.3.5</version>
-            <executions>
-               <execution>
-                  <id>process</id>
-                  <goals>
-                     <goal>process</goal>
-                  </goals>
-                  <phase>generate-sources</phase>
-                  <configuration>
-                     <compilerArguments>-Aeclipselink.persistencexml=src/main/resources/META-INF/persistence.xml</compilerArguments>
-                     <processors>
-                        <processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
-                     </processors>
-                  </configuration>
-               </execution>
-            </executions>
-         </plugin>
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<version>1.3.5</version>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<compilerArguments>-Aeclipselink.persistencexml=src/main/resources/META-INF/persistence.xml</compilerArguments>
+							<processors>
+								<processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
+							</processors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 
-      </plugins>
-   </build>
-   <dependencies>
+		</plugins>
+	</build>
+	<dependencies>
 
-      <dependency>
-         <groupId>org.eclipse.persistence</groupId>
-         <artifactId>org.eclipse.persistence.jpa.modelgen</artifactId>
-         <version>2.1.0</version>
-         <scope>compile</scope>
-      </dependency>
-      <!--
-         <dependency> <groupId>org.springframework.javaconfig</groupId>
-         <artifactId>org.springframework.config.java</artifactId>
-         <version>1.0.0.BUILD-SNAPSHOT</version> </dependency>
-      -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.jpa.modelgen</artifactId>
+			<version>2.1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- <dependency> <groupId>org.springframework.javaconfig</groupId> <artifactId>org.springframework.config.java</artifactId> 
+			<version>1.0.0.BUILD-SNAPSHOT</version> </dependency> -->
 
-      <dependency>
-         <groupId>org.eclipse.persistence</groupId>
-         <artifactId>javax.persistence</artifactId>
-         <version>2.0.0</version>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>com.h2database</groupId>
-         <artifactId>h2</artifactId>
-         <version>1.3.155</version>
-      </dependency>
-      <dependency>
-         <groupId>commons-beanutils</groupId>
-         <artifactId>commons-beanutils</artifactId>
-         <version>1.8.3</version>
-      </dependency>
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>javax.persistence</artifactId>
+			<version>2.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.155</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
+		</dependency>
 
-   </dependencies>
-   <repositories>
-      <repository>
-         <id>EclipseLink Repo</id>
-         <url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
-      </repository>
-   </repositories>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>EclipseLink Repo</id>
+			<url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo</url>
+		</repository>
+	</repositories>
 
-   <pluginRepositories>
-      <pluginRepository>
-         <id>maven-annotation-plugin</id>
-         <url>http://maven-annotation-plugin.googlecode.com/svn/trunk/mavenrepo</url>
-      </pluginRepository>
-   </pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-annotation-plugin</id>
+			<url>http://maven-annotation-plugin.googlecode.com/svn/trunk/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>

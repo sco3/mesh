@@ -149,8 +149,7 @@ public class Accomodator {
 
 			if (newAn > oldAn) {
 				System.out.println("Mines: " + mMinesNumber);
-				int otherCount = getAllCellSize() - mCandidates.size()
-						- mOpenCells.size() - mKnownCells.size();
+				int otherCount = getAllCellSize() - mCandidates.size() - mOpenCells.size() - mKnownCells.size();
 				int otherMines = mBoard.getMines() - mMinesNumber;
 				mOtherAll += Accomodations.accnum[otherCount][otherMines];
 				mOtherSingle += Accomodations.single[otherCount][otherMines];
@@ -159,8 +158,7 @@ public class Accomodator {
 		}
 
 		if (mAccomNumber == 0) {
-			int otherCount = getAllCellSize() - mCandidates.size()
-					- mOpenCells.size() - mKnownCells.size();
+			int otherCount = getAllCellSize() - mCandidates.size() - mOpenCells.size() - mKnownCells.size();
 			int otherMines = mBoard.getMines() - getFlagCount();
 			mOtherAll += Accomodations.accnum[otherCount][otherMines];
 			mOtherSingle += Accomodations.single[otherCount][otherMines];
@@ -171,18 +169,20 @@ public class Accomodator {
 
 	public void recAccomodate(int pos, int level) {
 		for (int i = pos; i < mPlaces - mMinesNumber + 1 + level; i++) {
-			mMatrix[i] = LABELS.substring(level, level + 1);
-			incCandidates(i);
+			if (i < mMatrix.length) {
+				mMatrix[i] = LABELS.substring(level, level + 1);
+				incCandidates(i);
 
-			if (mMinesNumber > level + 1) {
-				recAccomodate(i + 1, level + 1);
-			} else {
-				if (check()) {
-					incrementStat();
+				if (mMinesNumber > level + 1) {
+					recAccomodate(i + 1, level + 1);
+				} else {
+					if (check()) {
+						incrementStat();
+					}
 				}
+				mMatrix[i] = EMPTY;
+				decCandidates(i);
 			}
-			mMatrix[i] = EMPTY;
-			decCandidates(i);
 		}
 	}
 
@@ -201,7 +201,7 @@ public class Accomodator {
 	private boolean check() {
 		boolean result = true;
 		for (Cell cell : mOpenCells) {
-			if (cell.getNumm() != cell.getPresumable()+cell.getFlags()) {
+			if (cell.getNumm() != cell.getPresumable() + cell.getFlags()) {
 				result = false;
 				break;
 			}

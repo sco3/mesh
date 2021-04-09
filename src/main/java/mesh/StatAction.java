@@ -11,7 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import sun.awt.motif.MEmbedCanvasPeer;
+//import sun.awt.motif.MEmbedCanvasPeer;
 
 final class StatAction implements ActionListener {
 	/**
