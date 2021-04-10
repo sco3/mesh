@@ -1,0 +1,1 @@
+JAVA_HOME=$HOME/prg/graalvm-ee-java8-21.0.0.2/ mvn clean install -P graal
