@@ -60,7 +60,7 @@ final class ProbabilityAction implements ActionListener {
 				}
 			}
 		}
-		
+
 		mForm.mDataModel.fireTableDataChanged();
 
 		Board board = new Board(size, size);
@@ -84,7 +84,7 @@ final class ProbabilityAction implements ActionListener {
 //				if (dProb == 0) {
 //					str = "0%";
 //				} else 
-				
+
 				if (prob == 100) {
 					str = "Flag";
 				} else {
@@ -97,9 +97,7 @@ final class ProbabilityAction implements ActionListener {
 				for (int j = 0; j < size; j++) {
 					String str = mForm.getDataModel().matrix[i][j];
 					if ("".equals(str)) {
-						mForm.getDataModel().matrix[i][j] = a
-								.getOtherProbability()
-								+ "%";
+						mForm.getDataModel().matrix[i][j] = a.getOtherProbability() + "%";
 					}
 				}
 			}
@@ -108,15 +106,25 @@ final class ProbabilityAction implements ActionListener {
 				for (int j = 0; j < size; j++) {
 					String str = mForm.getDataModel().matrix[i][j];
 					if ("".equals(str)) {
-						mForm.getDataModel().matrix[i][j] = a
-								.getOtherProbability()
-								+ "%";
+						mForm.getDataModel().matrix[i][j] = a.getOtherProbability() + "%";
 					}
 				}
 			}
-			JOptionPane.showMessageDialog(mForm, "None found.", "Info",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(mForm, "None found.", "Info", JOptionPane.INFORMATION_MESSAGE);
 
+		}
+		int rest = 0;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				String str = mForm.getDataModel().matrix[i][j];
+				if (str.indexOf('%') >= 0 && ("0%".equals(str) == false)) {
+					rest++;
+				}
+			}
+		}
+		if (rest == 0) {
+			mForm.getWon().setSelected(true);
+			JOptionPane.showMessageDialog(mForm, "Won!", "Info", JOptionPane.INFORMATION_MESSAGE);
 		}
 
 		mForm.getDataModel().fireTableDataChanged();

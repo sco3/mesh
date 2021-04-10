@@ -17,14 +17,15 @@ final class ClearAction implements ActionListener {
 	 */
 	ClearAction(MainForm mainForm) {
 		mForm = mainForm;
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int mod = e.getModifiers() & ActionEvent.CTRL_MASK;
-		
-		mForm.clear(mod);
 
+		mForm.clear(mod);
+		mForm.getWon().setSelected(false);
 	}
 
 }
