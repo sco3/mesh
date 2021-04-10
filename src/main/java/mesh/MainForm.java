@@ -94,12 +94,12 @@ public class MainForm extends JFrame {
 						layout.createParallelGroup() //
 								.addComponent(getRandom()) //
 								.addComponent(getClear()) //
-				)//
-				.addGroup(
-
-						layout.createParallelGroup() //
-								.addComponent(getProbCalc())//
-				)
+								.addComponent(getProbCalc()))//
+//				.addGroup(
+//
+//						layout.createParallelGroup() //
+//								//
+//				)
 
 		);
 
@@ -109,12 +109,12 @@ public class MainForm extends JFrame {
 						.addGroup(
 
 								layout.createSequentialGroup() //
+										.addComponent(getProbCalc())//
 										.addComponent(getRandom()) //
 										.addComponent(getClear()) //
-										.addComponent(getProbCalc())
+
 						//
-						)
-		);
+						));
 
 	}
 
