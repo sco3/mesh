@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <time.h>
 
-int mSize = 4;
-int mNum = 1;
+int mSize = 55;
+int mNum = 10;
 unsigned long long mResult = 0;
 
 void recAccomodate(int pos, int level) {

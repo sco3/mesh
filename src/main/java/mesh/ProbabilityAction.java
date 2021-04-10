@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
 
 //import javax.swing.JOptionPane;
 
-final class ProbabilityAction implements ActionListener {
+final class ProbabilityAction //
+		implements ActionListener, MeshConstants {
 	/**
 	 * 
 	 */
@@ -64,7 +65,7 @@ final class ProbabilityAction implements ActionListener {
 		mForm.mDataModel.fireTableDataChanged();
 
 		Board board = new Board(size, size);
-		board.setMines(11);
+		board.setMines(MINES_NUM);
 
 		Accomodator a = new Accomodator(openCells, knownCells, board);
 

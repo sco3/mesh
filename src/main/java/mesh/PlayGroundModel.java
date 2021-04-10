@@ -3,14 +3,13 @@
  */
 package mesh;
 
-import java.awt.Component;
-
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-final class PlayGroundModel extends  AbstractTableModel {
+final class PlayGroundModel //
+		extends AbstractTableModel //
+		implements MeshConstants {
 	private static final long serialVersionUID = 1L;
-	private static final int SIZE = 9;
+	private static final int SIZE = SIDE_SIZE;
 	String[][] matrix = new String[SIZE][SIZE];
 	int h = 0;
 	/**
@@ -18,13 +17,13 @@ final class PlayGroundModel extends  AbstractTableModel {
 	 */
 	@SuppressWarnings("unused")
 	private final MainForm mForm;
-	
+
 	@Override
-	 public String getColumnName(int columnIndex) {
-		 return null;
-	 }
-	
-	public int getSize () {
+	public String getColumnName(int columnIndex) {
+		return null;
+	}
+
+	public int getSize() {
 		return SIZE;
 	}
 
@@ -34,15 +33,11 @@ final class PlayGroundModel extends  AbstractTableModel {
 	PlayGroundModel(MainForm mainForm) {
 		mForm = mainForm;
 		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0 ; j < SIZE; j++) {
-				matrix[i][j]="";
+			for (int j = 0; j < SIZE; j++) {
+				matrix[i][j] = "";
 			}
 		}
 	}
-
-	
-	
-
 
 	@Override
 	public Object getValueAt(int rowIndex, int colIndex) {
@@ -52,8 +47,7 @@ final class PlayGroundModel extends  AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		
-		
+
 //		int height = mForm.getGridView().getHeight();
 //		if (h != height) {
 //			h = height;
@@ -63,10 +57,9 @@ final class PlayGroundModel extends  AbstractTableModel {
 //			}		
 //			
 //		}
-		
+
 		return SIZE;
 	}
-
 
 	@Override
 	public int getColumnCount() {
@@ -79,7 +72,7 @@ final class PlayGroundModel extends  AbstractTableModel {
 		// TODO Auto-generated method stub
 		return String.class;
 	}
-	
+
 //	 public Component getTableCellRendererComponent(
 //	            JTable table, Object value, boolean isSelected,
 //	            boolean hasFocus, int row, int column) {
