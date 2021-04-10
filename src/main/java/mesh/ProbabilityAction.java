@@ -123,7 +123,6 @@ final class ProbabilityAction implements ActionListener {
 			}
 		}
 		if (rest == 0) {
-			mForm.getWon().setSelected(true);
 			JOptionPane.showMessageDialog(mForm, "Won!", "Info", JOptionPane.INFORMATION_MESSAGE);
 		}
 
