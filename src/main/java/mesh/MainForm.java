@@ -46,14 +46,6 @@ public class MainForm extends JFrame {
 		return mImportCsv;
 	}
 
-	private JButton getStat() {
-		if (mStat == null) {
-			mStat = new JButton("Stat");
-			mStat.addActionListener(new StatAction(this));
-		}
-		return mStat;
-	}
-
 	private JButton getSave() {
 		if (mSave == null) {
 			mSave = new JButton("Save");
@@ -128,10 +120,8 @@ public class MainForm extends JFrame {
 			mGrid.setColumnSelectionAllowed(true);
 			mGrid.setRowSelectionAllowed(true);
 
-			final TableCellRenderer rndr = mGrid
-					.getDefaultRenderer(Object.class);
-			mGrid.setDefaultRenderer(Object.class, new OurCellRenderer(this,
-					rndr));
+			final TableCellRenderer rndr = mGrid.getDefaultRenderer(Object.class);
+			mGrid.setDefaultRenderer(Object.class, new OurCellRenderer(this, rndr));
 
 		}
 		return mGrid;
@@ -156,59 +146,51 @@ public class MainForm extends JFrame {
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 
-		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(
-				getGridView(), GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+		layout.setVerticalGroup(layout.createSequentialGroup()
+				.addComponent(getGridView(), GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
 				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-				.addGroup(
-						layout.createParallelGroup(
-								GroupLayout.Alignment.BASELINE) //
-								.addComponent(getImportText()) //
-								.addComponent(getImportButton(),
-										GroupLayout.PREFERRED_SIZE,
-										GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)) //
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE) //
+						.addComponent(getImportText()) //
+						.addComponent(getImportButton(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)) //
 				.addGroup(
 
-				layout.createParallelGroup() //
-						.addComponent(getRandom()) //
-						.addComponent(getClear()) //
-						.addComponent(getSave()) //
-						.addComponent(getWon()) //
-						.addComponent(getStat()) //
-						.addComponent(getImportCsv())) //
+						layout.createParallelGroup() //
+								.addComponent(getRandom()) //
+								.addComponent(getClear()) //
+								.addComponent(getSave()) //
+								.addComponent(getWon()) //
+								.addComponent(getImportCsv())) //
 				.addGroup(
 
-				layout.createParallelGroup() //
-						.addComponent(getProbCalc())//
+						layout.createParallelGroup() //
+								.addComponent(getProbCalc())//
 				)
 
 		);
 
 		layout.setHorizontalGroup( //
 				layout.createParallelGroup() //
-						.addComponent(getGridView(), 100,
-								GroupLayout.DEFAULT_SIZE, Integer.MAX_VALUE) //
-						.addGroup(GroupLayout.Alignment.TRAILING,
-								layout.createSequentialGroup() //
-										.addComponent(getImportText()) //
-										.addComponent(getImportButton())) //
+						.addComponent(getGridView(), 100, GroupLayout.DEFAULT_SIZE, Integer.MAX_VALUE) //
+						.addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup() //
+								.addComponent(getImportText()) //
+								.addComponent(getImportButton())) //
 
 						.addGroup(
 
-						layout.createSequentialGroup() //
-								.addComponent(getRandom()) //
-								.addComponent(getClear()) //
-								.addComponent(getSave()) //
-								.addComponent(getWon()) //
-								.addComponent(getStat()) //
-								.addComponent(getImportCsv())) //
+								layout.createSequentialGroup() //
+										.addComponent(getRandom()) //
+										.addComponent(getClear()) //
+										.addComponent(getSave()) //
+										.addComponent(getWon()) //
+										.addComponent(getImportCsv())) //
 						.addGroup( //
 
 								layout.createSequentialGroup() //
-										.addComponent(getProbCalc()) //		
+										.addComponent(getProbCalc()) //
 						)
 
-				);
+		);
 
 	}
 
@@ -237,6 +219,7 @@ public class MainForm extends JFrame {
 		}
 		return mProbCalc;
 	}
+
 	void clear(int mod) {
 		int size = getDataModel().getSize();
 

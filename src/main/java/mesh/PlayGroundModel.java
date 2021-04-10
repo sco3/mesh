@@ -3,11 +3,14 @@
  */
 package mesh;
 
+import java.awt.Component;
+
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 final class PlayGroundModel extends  AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final int SIZE = 7;
+	private static final int SIZE = 9;
 	String[][] matrix = new String[SIZE][SIZE];
 	int h = 0;
 	/**
@@ -76,5 +79,10 @@ final class PlayGroundModel extends  AbstractTableModel {
 		// TODO Auto-generated method stub
 		return String.class;
 	}
-
+	
+//	 public Component getTableCellRendererComponent(
+//	            JTable table, Object value, boolean isSelected,
+//	            boolean hasFocus, int row, int column) {
+//		 return super.getT
+//	 }
 }
