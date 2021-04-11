@@ -1,6 +1,7 @@
 package mesh;
 
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -17,7 +18,7 @@ public class MainForm extends JFrame {
 	JTable mGrid;
 	PlayGroundModel mDataModel;
 
-	private Component mGridView;
+	private JScrollPane mGridView;
 	private JButton mRandom;
 	private JButton mClear;
 	private JButton mProbCalc;
@@ -45,6 +46,7 @@ public class MainForm extends JFrame {
 	public Component getGridView() {
 		if (mGridView == null) {
 			mGridView = new JScrollPane(getGrid());
+			mGridView.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
 
 		}
 		return mGridView;
@@ -53,6 +55,7 @@ public class MainForm extends JFrame {
 	public JTable getGrid() {
 		if (mGrid == null) {
 			mGrid = new JTable();
+
 			setDataModel(new PlayGroundModel(this));
 			mGrid.setModel(getDataModel());
 			mGrid.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -60,6 +63,7 @@ public class MainForm extends JFrame {
 			mGrid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			mGrid.setColumnSelectionAllowed(true);
 			mGrid.setRowSelectionAllowed(true);
+			mGrid.setTableHeader(null);
 
 			final TableCellRenderer rndr = mGrid.getDefaultRenderer(Object.class);
 			mGrid.setDefaultRenderer(Object.class, new OurCellRenderer(this, rndr));
@@ -130,7 +134,7 @@ public class MainForm extends JFrame {
 		return mDataModel;
 	}
 
-	public void setGridView(Component gridView) {
+	public void setGridView(JScrollPane gridView) {
 		mGridView = gridView;
 	}
 
