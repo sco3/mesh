@@ -1,5 +1,7 @@
 package mesh;
 
+import static java.lang.String.format;
+
 import java.io.File;
 import java.io.PrintStream;
 import java.util.concurrent.ExecutorService;
@@ -41,9 +43,11 @@ public class CalcAccom {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("pool size: " + poolSize);
-		int placesNum = 8; // 9x9 field
-		int minesNum = 1; // 11 mines
+		
+		int placesNum = 81; // 9x9 field
+		int minesNum = 11; // 11 mines
+
+		System.out.println(format("Pool: %d Field: %d mines: %d", poolSize, placesNum, minesNum));
 
 		ThreadPoolExecutor pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(poolSize);
 		System.out.println(pool);
