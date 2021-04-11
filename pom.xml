@@ -68,7 +68,7 @@
 							<mainClass>mesh.MainForm</mainClass>
 							<imageName>mesh</imageName>
 							<buildArgs>
-								--no-fallback --no-server  -Djava.awt.headless=false
+								--no-fallback --no-server -Djava.awt.headless=false
 							</buildArgs>
 						</configuration>
 					</plugin>
@@ -80,13 +80,13 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.graalvm.sdk</groupId>
 			<artifactId>graal-sdk</artifactId>
-			<version>19.3.2</version>
+			<version>21.0.0.2</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

@@ -2343,3 +2343,39 @@ public class Accomodations {
         // accomodations # in 64 places, 10 items. (0.1563 vs 0.1563)
         accnum[64][10]=151473214816;
         single[64][10]=23667689815;
+        // accomodations # in 64 places, 11 items. (0.1719 vs 0.1719)
+        accnum[64][11]=743595781824;
+        single[64][11]=127805525001;
+        // accomodations # in 65 places, 0 items. (0.0000 vs 0.0000)
+        accnum[65][0]=0;
+        single[65][0]=0;
+        // accomodations # in 65 places, 1 items. (0.0154 vs 0.0154)
+        accnum[65][1]=65;
+        single[65][1]=1;
+        // accomodations # in 65 places, 2 items. (0.0308 vs 0.0308)
+        accnum[65][2]=2080;
+        single[65][2]=64;
+        // accomodations # in 65 places, 3 items. (0.0462 vs 0.0462)
+        accnum[65][3]=43680;
+        single[65][3]=2016;
+        // accomodations # in 65 places, 4 items. (0.0615 vs 0.0615)
+        accnum[65][4]=677040;
+        single[65][4]=41664;
+        // accomodations # in 65 places, 5 items. (0.0769 vs 0.0769)
+        accnum[65][5]=8259888;
+        single[65][5]=635376;
+        // accomodations # in 65 places, 6 items. (0.0923 vs 0.0923)
+        accnum[65][6]=82598880;
+        single[65][6]=7624512;
+        // accomodations # in 65 places, 7 items. (0.1077 vs 0.1077)
+        accnum[65][7]=696190560;
+        single[65][7]=74974368;
+        // accomodations # in 65 places, 8 items. (0.1231 vs 0.1231)
+        accnum[65][8]=5047381560;
+        single[65][8]=621216192;
+        // accomodations # in 65 places, 9 items. (0.1385 vs 0.1385)
+        accnum[65][9]=31966749880;
+        single[65][9]=4426165368;
+        // accomodations # in 65 places, 10 items. (0.1538 vs 0.1538)
+        accnum[65][10]=179013799328;
+        single[65][10]=27540584512;
