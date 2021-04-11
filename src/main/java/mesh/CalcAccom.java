@@ -2,6 +2,9 @@ package mesh;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CalcAccom {
 	public int mNum;
@@ -28,9 +31,20 @@ public class CalcAccom {
 	}
 
 	public static void main(String[] argv) throws Exception {
+		int poolSize = 8;
+		if (argv.length > 0) {
+			try {
+				poolSize = Integer.parseInt(argv[0]);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("pool size: " + poolSize);
 		int placesNum = 81; // 9x9 field
 		int minesNum = 11; // 11 mines
-		CalcAccom a = new CalcAccom();
+
+		ExecutorService pool = Executors.newFixedThreadPool(poolSize);
 
 		PrintStream out = new PrintStream(new File("Accomodations.java"));
 		out.println("package mesh;");
@@ -41,25 +55,44 @@ public class CalcAccom {
 		out.println("    public static final long[][] accnum = new long[MAX_SIZE + 1][MAX_NUM + 1];");
 		out.println("    public static final long[][] single = new long[MAX_SIZE + 1][MAX_NUM + 1];");
 		out.println("    static {");
+		final AtomicInteger running = new AtomicInteger(0);
 
-		a.mOut = out;
 		try {
 
-			for (a.mSize = 0; a.mSize <= placesNum; a.mSize++) {
+			for (int fieldSize = 0; fieldSize <= placesNum; fieldSize++) {
 
-				for (a.mNum = 0; a.mNum <= minesNum; a.mNum++) {
+				for (int mines = 0; mines <= minesNum; mines++) {
+					CalcAccom a = new CalcAccom();
 					a.mResult = 0;
-
-					long begin = System.currentTimeMillis();
-					a.recAccomodate(0, 0);
-					long end = System.currentTimeMillis();
-					System.out.println("" //
-							+ "// size: " + a.mSize + " items: " + a.mNum //
-							+ " time: " + ((end - begin) / 1000)//
-					);
-					a.printResults();
+					a.mOut = out;
+					a.mSize = fieldSize;
+					a.mNum = mines;
+					pool.execute(new Runnable() {
+						@Override
+						public void run() {
+							running.incrementAndGet();
+							try {
+								long begin = System.currentTimeMillis();
+								a.recAccomodate(0, 0);
+								long end = System.currentTimeMillis();
+								System.out.println("" //
+										+ "// size: " + a.mSize + " items: " + a.mNum //
+										+ " time: " + ((end - begin) / 1000)//
+								);
+								a.printResults();
+							} finally {
+								running.decrementAndGet();
+							}
+						}
+					});
 				}
 			}
+			while (running.intValue() > 0) {
+				Thread.sleep(10000);
+				System.out.println("Wait " + running.intValue() + " tasks to complete.");
+			}
+			pool.shutdown();
+			pool.shutdownNow();
 			out.println("    }");
 			out.println("}");
 		} finally {
@@ -77,7 +110,7 @@ public class CalcAccom {
 
 	}
 
-	private void printResults() {
+	private synchronized void printResults() {
 
 		long single = mResult * mNum / nz(mSize);
 		double ratio = (double) mNum / nz(mSize);
