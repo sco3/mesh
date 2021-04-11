@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CalcAccom {
@@ -41,10 +42,11 @@ public class CalcAccom {
 			}
 		}
 		System.out.println("pool size: " + poolSize);
-		int placesNum = 81; // 9x9 field
-		int minesNum = 11; // 11 mines
+		int placesNum = 8; // 9x9 field
+		int minesNum = 1; // 11 mines
 
-		ExecutorService pool = Executors.newFixedThreadPool(poolSize);
+		ThreadPoolExecutor pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(poolSize);
+		System.out.println(pool);
 
 		PrintStream out = new PrintStream(new File("Accomodations.java"));
 		out.println("package mesh;");
@@ -87,9 +89,13 @@ public class CalcAccom {
 					});
 				}
 			}
-			while (running.intValue() > 0) {
+
+			while (pool.getActiveCount() > 0 && running.intValue() > 0) {
 				Thread.sleep(10000);
-				System.out.println("Wait " + running.intValue() + " tasks to complete.");
+				System.out.println("" //
+						+ "Wait running: " + running.intValue() + " / " //
+						+ " active: " + pool.getActiveCount() + " tasks to complete."//
+				);
 			}
 			pool.shutdown();
 			pool.shutdownNow();
