@@ -5,7 +5,6 @@ import static java.lang.System.out;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -95,7 +94,9 @@ public class CalcAccom {
 				}
 			}
 
-			while (pool.getActiveCount() > 0 && running.intValue() > 0) {
+			while (pool.getQueue().size() > 0 //
+					&& pool.getActiveCount() > 0 //
+					&& running.intValue() > 0) {
 				Thread.sleep(10000);
 				out.println(format("" //
 						+ "Wait tasks to complete: pool queue: %d, running: %d, active: %d", //
