@@ -32,11 +32,12 @@ final class ProbabilityAction //
 		List<Cell> openCells = new ArrayList<Cell>();
 		List<Cell> knownCells = new ArrayList<Cell>();
 		int size = mForm.getDataModel().getSize();
+		String[][] matrix = mForm.getDataModel().matrix;
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
-				String str = mForm.getDataModel().matrix[row][col];
+				String str = matrix[row][col];
 				if (str.indexOf("%") >= 0) {
-					mForm.getDataModel().matrix[row][col] = "";
+					matrix[row][col] = "";
 				}
 				try {
 					if (".".equals(str)) {
@@ -82,32 +83,28 @@ final class ProbabilityAction //
 				double dProb = 100.0 * a.getStats()[idx] / a.getAccomNumber();
 				long prob = Math.round(dProb);
 				String str = Long.toString(prob);
-//				if (dProb == 0) {
-//					str = "0%";
-//				} else 
-
 				if (prob == 100) {
 					str = "Flag";
 				} else {
 					str = Long.toString(prob) + "%";
 				}
-				mForm.getDataModel().matrix[cand.getRow()][cand.getCol()] = str;
+				matrix[cand.getRow()][cand.getCol()] = str;
 				idx++;
 			}
 			for (int i = 0; i < size; i++) {
 				for (int j = 0; j < size; j++) {
-					String str = mForm.getDataModel().matrix[i][j];
+					String str = matrix[i][j];
 					if ("".equals(str)) {
-						mForm.getDataModel().matrix[i][j] = a.getOtherProbability() + "%";
+						matrix[i][j] = a.getOtherProbability() + "%";
 					}
 				}
 			}
 		} else {
 			for (int i = 0; i < size; i++) {
 				for (int j = 0; j < size; j++) {
-					String str = mForm.getDataModel().matrix[i][j];
+					String str = matrix[i][j];
 					if ("".equals(str)) {
-						mForm.getDataModel().matrix[i][j] = a.getOtherProbability() + "%";
+						matrix[i][j] = a.getOtherProbability() + "%";
 					}
 				}
 			}
@@ -117,7 +114,7 @@ final class ProbabilityAction //
 		int rest = 0;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				String str = mForm.getDataModel().matrix[i][j];
+				String str = matrix[i][j];
 				if (str.indexOf('%') >= 0 && ("0%".equals(str) == false)) {
 					rest++;
 				}

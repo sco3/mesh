@@ -2,6 +2,8 @@ package mesh;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ public class MainForm extends JFrame {
 	private JButton mRandom;
 	private JButton mClear;
 	private JButton mProbCalc;
+	public List<Cell> mLessLikelyCells = new ArrayList<Cell>();
 
 	private JButton getClear() {
 		if (mClear == null) {
