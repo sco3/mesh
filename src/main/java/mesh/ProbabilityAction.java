@@ -44,11 +44,7 @@ final class ProbabilityAction //
 						str = "0";
 					}
 					if ("Flag".equals(str)) {
-//						Cell cell = new Cell();
-//						cell.setRow(row);
-//						cell.setCol(col);
-//						cell.setStatus(CellStatus.FLAG);
-//						knownCells.add(cell);
+						// nothing
 					} else {
 						int numMines = Integer.parseInt(str);
 						Cell cell = new Cell();
@@ -77,11 +73,18 @@ final class ProbabilityAction //
 
 		List<Cell> cands = a.getCandidates();
 		int idx = 0;
-
+		long min = Long.MAX_VALUE;
+		long otherProb = a.getOtherProbability();
+		if (otherProb < min /* && otherProb > 0 */) {
+			min = otherProb;
+		}
 		if (a.getAccomNumber() > 0) {
 			for (Cell cand : cands) {
 				double dProb = 100.0 * a.getStats()[idx] / a.getAccomNumber();
 				long prob = Math.round(dProb);
+				if (prob < min /* && prob > 0 */) {
+					min = prob;
+				}
 				String str = Long.toString(prob);
 				if (prob == 100) {
 					str = "Flag";
@@ -95,7 +98,7 @@ final class ProbabilityAction //
 				for (int j = 0; j < size; j++) {
 					String str = matrix[i][j];
 					if ("".equals(str)) {
-						matrix[i][j] = a.getOtherProbability() + "%";
+						matrix[i][j] = otherProb + "%";
 					}
 				}
 			}
@@ -104,18 +107,23 @@ final class ProbabilityAction //
 				for (int j = 0; j < size; j++) {
 					String str = matrix[i][j];
 					if ("".equals(str)) {
-						matrix[i][j] = a.getOtherProbability() + "%";
+						matrix[i][j] = otherProb + "%";
 					}
 				}
 			}
 			JOptionPane.showMessageDialog(mForm, "None found.", "Info", JOptionPane.INFORMATION_MESSAGE);
 
 		}
+		String minProb = min + "%";
+		mForm.mLessLikelyCells.clear();
 		int rest = 0;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				String str = matrix[i][j];
 				if (str.indexOf('%') >= 0 && ("0%".equals(str) == false)) {
+					if (minProb.equals(str)) {
+						mForm.mLessLikelyCells.add(new Cell(i, j));
+					}
 					rest++;
 				}
 			}

@@ -1,7 +1,11 @@
 package mesh;
 
+import static javax.swing.UIManager.setLookAndFeel;
+
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
 public class MainForm extends JFrame {
@@ -67,6 +72,49 @@ public class MainForm extends JFrame {
 			mGrid.setColumnSelectionAllowed(true);
 			mGrid.setRowSelectionAllowed(true);
 			mGrid.setTableHeader(null);
+			mGrid.addMouseWheelListener(new MouseWheelListener() {
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					String[] variants = { "", ".", "1", "2", "3", "4", "5", "6", "7", "8", "Flag" };
+					int row = mGrid.rowAtPoint(e.getPoint());
+					int col = mGrid.columnAtPoint(e.getPoint());
+
+					if (col < 0 || row < 0) {
+						return;
+					}
+					String cur = getDataModel().matrix[row][col];
+					boolean found = false;
+					int iVar = 0;
+					for (; iVar < variants.length; iVar++) {
+						if (variants[iVar].equals(cur)) {
+							found = true;
+							break;
+						}
+						iVar++;
+					}
+					if (!found) {
+						iVar = 1;
+					}
+					int rotation = e.getWheelRotation();
+					System.out.println(rotation);
+					if (rotation < 0) {
+						iVar++;
+
+					} else {
+						iVar--;
+
+					}
+					if (iVar < 1) {
+						iVar = 1;
+					} else if (iVar > variants.length - 1) {
+						iVar = variants.length - 1;
+					}
+
+					getDataModel().matrix[row][col] = variants[iVar];
+					getDataModel().fireTableCellUpdated(row, col);
+				}
+
+			});
 
 			final TableCellRenderer rndr = mGrid.getDefaultRenderer(Object.class);
 			mGrid.setDefaultRenderer(Object.class, new OurCellRenderer(this, rndr));
@@ -77,12 +125,22 @@ public class MainForm extends JFrame {
 	}
 
 	public MainForm() {
-		Thread db = new Thread(new Runnable() {
-			@Override
-			public void run() {
+		try {
+			UIManager.LookAndFeelInfo[] looks = UIManager.getInstalledLookAndFeels();
+			for (UIManager.LookAndFeelInfo look : looks) {
+				System.out.println(look.getClassName());
 			}
-		});
-		db.start();
+
+			setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+//		Thread db = new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//			}
+//		});
+//		db.start();
 
 		setSize(470, 520);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -25,6 +25,7 @@ final class ClearAction implements ActionListener {
 		int mod = e.getModifiers() & ActionEvent.CTRL_MASK;
 
 		mForm.clear(mod);
+		mForm.mLessLikelyCells.clear();
 	}
 
 }

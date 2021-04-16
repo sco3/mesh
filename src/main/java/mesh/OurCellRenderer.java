@@ -15,6 +15,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 final class OurCellRenderer implements TableCellRenderer {
+	public static int DELTA = 95;
+	public static int FULL = 0xff;
+	public static int LESS = FULL - DELTA;
 	/**
 	 * 
 	 */
@@ -71,11 +74,25 @@ final class OurCellRenderer implements TableCellRenderer {
 			}
 
 			if ("0%".equals(matrix[row][column])) {
-				dcr.setBackground(new Color(0xa0, 0xff, 0xa0));
+				dcr.setBackground(new Color(LESS, FULL, LESS));
 			} else if ("flag".equalsIgnoreCase(matrix[row][column])) {
-				dcr.setBackground(Color.RED);
+				dcr.setBackground(new Color(FULL, LESS, LESS));
 			} else {
-				dcr.setBackground(Color.WHITE);
+				if (mMainForm.mGrid.getSelectedColumn() == column //
+						&& mMainForm.mGrid.getSelectedRow() == row) {
+					// nothing
+				} else {
+					dcr.setBackground(Color.WHITE);
+				}
+				if (mMainForm.mLessLikelyCells.size() > 0) {
+					for (Cell cell : mMainForm.mLessLikelyCells) {
+						if (cell.getRow() == row && cell.getCol() == column) {
+							dcr.setBackground(new Color(FULL, FULL, LESS));
+							break;
+						}
+					}
+				}
+
 			}
 		}
 
