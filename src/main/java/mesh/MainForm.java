@@ -90,7 +90,6 @@ public class MainForm extends JFrame {
 							found = true;
 							break;
 						}
-						iVar++;
 					}
 					if (!found) {
 						iVar = 1;
