@@ -81,6 +81,7 @@ final class ProbabilityAction //
 		if (a.getAccomNumber() > 0) {
 			for (Cell cand : cands) {
 				double dProb = 100.0 * a.getStats()[idx] / a.getAccomNumber();
+				System.out.println(cand.getRow() + "," + cand.getCol() + ":" + dProb);
 				long prob = Math.round(dProb);
 				if (prob < min /* && prob > 0 */) {
 					min = prob;

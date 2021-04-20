@@ -62,11 +62,11 @@ final class OurCellRenderer implements TableCellRenderer {
 			if ("1".equals(matrix[row][column])) {
 				dcr.setForeground(Color.BLUE);
 			} else if ("2".equals(matrix[row][column])) {
-				dcr.setForeground(Color.GREEN);
+				dcr.setForeground(new Color(0f, 0.5f, 0f));
 			} else if ("3".equals(matrix[row][column])) {
-				dcr.setForeground(new Color(0.5019608f, 0.5019608f, 0.0f));
+				dcr.setForeground(new Color(0.5f, 0.5f, 0.0f));
 			} else if ("4".equals(matrix[row][column])) {
-				dcr.setForeground(new Color(0.54509807f, 0.0f, 0.54509807f));
+				dcr.setForeground(new Color(0.5f, 0.0f, 0.5f));
 			} else if ("5".equals(matrix[row][column])) {
 				dcr.setForeground(Color.RED);
 			} else {

@@ -4,8 +4,6 @@ import static javax.swing.UIManager.setLookAndFeel;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,48 +70,7 @@ public class MainForm extends JFrame {
 			mGrid.setColumnSelectionAllowed(true);
 			mGrid.setRowSelectionAllowed(true);
 			mGrid.setTableHeader(null);
-			mGrid.addMouseWheelListener(new MouseWheelListener() {
-				@Override
-				public void mouseWheelMoved(MouseWheelEvent e) {
-					String[] variants = { "", ".", "1", "2", "3", "4", "5", "6", "7", "8", "Flag" };
-					int row = mGrid.rowAtPoint(e.getPoint());
-					int col = mGrid.columnAtPoint(e.getPoint());
-
-					if (col < 0 || row < 0) {
-						return;
-					}
-					String cur = getDataModel().matrix[row][col];
-					boolean found = false;
-					int iVar = 0;
-					for (; iVar < variants.length; iVar++) {
-						if (variants[iVar].equals(cur)) {
-							found = true;
-							break;
-						}
-					}
-					if (!found) {
-						iVar = 1;
-					}
-					int rotation = e.getWheelRotation();
-					System.out.println(rotation);
-					if (rotation < 0) {
-						iVar++;
-
-					} else {
-						iVar--;
-
-					}
-					if (iVar < 1) {
-						iVar = 1;
-					} else if (iVar > variants.length - 1) {
-						iVar = variants.length - 1;
-					}
-
-					getDataModel().matrix[row][col] = variants[iVar];
-					getDataModel().fireTableCellUpdated(row, col);
-				}
-
-			});
+			mGrid.addMouseWheelListener(new MouseAction(this));
 
 			final TableCellRenderer rndr = mGrid.getDefaultRenderer(Object.class);
 			mGrid.setDefaultRenderer(Object.class, new OurCellRenderer(this, rndr));
