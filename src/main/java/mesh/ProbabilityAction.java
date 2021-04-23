@@ -99,7 +99,11 @@ final class ProbabilityAction //
 				for (int j = 0; j < size; j++) {
 					String str = matrix[i][j];
 					if ("".equals(str)) {
+//						if (otherProb == 100) {
+//							matrix[i][j] = "Flag";
+//						} else {
 						matrix[i][j] = otherProb + "%";
+//						}
 					}
 				}
 			}
