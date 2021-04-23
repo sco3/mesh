@@ -38,10 +38,11 @@ final class MouseAction implements MouseWheelListener {
 			iVar = 1;
 		}
 		int rotation = e.getWheelRotation();
+		boolean inc = false;
 
 		if (rotation < 0) {
 			iVar++;
-
+			inc = true;
 		} else {
 			iVar--;
 
@@ -50,6 +51,9 @@ final class MouseAction implements MouseWheelListener {
 			iVar = 1;
 		} else if (iVar > variants.length - 1) {
 			iVar = variants.length - 1;
+		}
+		if (inc && ".".equals(variants[iVar])) {
+			iVar++;
 		}
 
 		mMainForm.getDataModel().matrix[row][col] = variants[iVar];
