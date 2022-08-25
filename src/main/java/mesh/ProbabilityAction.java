@@ -33,11 +33,15 @@ final class ProbabilityAction //
 		List<Cell> knownCells = new ArrayList<Cell>();
 		int size = mForm.getDataModel().getSize();
 		String[][] matrix = mForm.getDataModel().matrix;
+		boolean empty = true;
 		for (int row = 0; row < size; row++) {
 			for (int col = 0; col < size; col++) {
 				String str = matrix[row][col];
 				if (str.indexOf("%") >= 0) {
 					matrix[row][col] = "";
+				}
+				if (!"".equals(matrix[row][col])) {
+				   empty = false;
 				}
 				try {
 					if (".".equals(str)) {
@@ -57,6 +61,10 @@ final class ProbabilityAction //
 					// ok this is not a number
 				}
 			}
+		}
+		if (empty == true) {
+		    System.out.println ("Empty");
+		    return;
 		}
 
 		mForm.mDataModel.fireTableDataChanged();

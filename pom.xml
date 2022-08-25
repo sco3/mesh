@@ -68,7 +68,10 @@
 							<mainClass>mesh.MainForm</mainClass>
 							<imageName>mesh</imageName>
 							<buildArgs>
-								--no-fallback --no-server -Djava.awt.headless=false
+								--no-fallback 
+								--no-server 
+								-Djava.awt.headless=false
+								-H:ConfigurationFileDirectories=${project.basedir}/src/test/resources/config
 							</buildArgs>
 						</configuration>
 					</plugin>

@@ -1,1 +1,4 @@
-JAVA_HOME=$HOME/prg/graalvm-ee-java8-21.0.0.2/ mvn clean install -P graal
+# wget https://objects.githubusercontent.com/github-production-release-asset-2e65be/222889977/32584a9e-118c-429d-acbb-9cd74f95f5ef?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20220825%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220825T110419Z&X-Amz-Expires=300&X-Amz-Signature=189d8e7736a3ecca58a14246614cc0b451be77001cf394ab286b3f3159a75bfe&X-Amz-SignedHeaders=host&actor_id=109809149&key_id=0&repo_id=222889977&response-content-disposition=attachment%3B%20filename%3Dgraalvm-ce-java11-linux-amd64-22.2.0.tar.gz
+# gu install native-image
+
+JAVA_HOME=$HOME/prg/graalvm-ce-java11-22.2.0/ mvn clean install -P graal

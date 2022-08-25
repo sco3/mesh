@@ -89,7 +89,7 @@ public class MainForm extends JFrame {
 				System.out.println(look.getClassName());
 			}
 
-			setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+			//setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
